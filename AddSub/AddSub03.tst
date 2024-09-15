@@ -1,4 +1,3 @@
-// AddSub03.tst
 // Test for a = 100, b = 50, c = 75
 
 load AddSub.asm,

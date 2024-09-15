@@ -1,4 +1,3 @@
-// Abs02.tst
 // Test for input = 0
 
 load Abs.asm,

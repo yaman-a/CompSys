@@ -1,4 +1,3 @@
-// Abs01.tst
 // Test for input = 7
 
 load Abs.asm,
