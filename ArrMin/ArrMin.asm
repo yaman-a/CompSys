@@ -3,9 +3,8 @@
 
 // Put your code here.
 
-@R1
-D = M          
-
+@R0
+M = 0          
 @pointer
 M = 0           
 
