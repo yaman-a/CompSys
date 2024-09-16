@@ -10,33 +10,55 @@
 
 @R0
 M = 0
-@R2
-D = M
-
-@END
-D;JEQ
-
-(LOOP)
-@R2
-D = M
-
-@END
-D;JEQ
-
-@R0
-A = M
 @R1
-D = D + M
+D = M
 
-@R0
+@END
+D;JEQ
+
+@R2
+D = M
+
+@END
+D;JEQ
+
+@R2
+D = M
+@POS
+D;JGT
+
+D = !D
+D = D + 1
+
+(POS)
+@count
 M = D
 
-@R2
-M = M - 1
+(LOOP)
+@R1
+D + M
+@R0
+M = M + D
 
+@count
+M = M - 1
+D = MIT
 @LOOP
-0;JMP
+D;JGT
+
+@R2
+D = M
+
+@NEG
+D;JLT
 
 (END)
 @END
-0;JMP
+A;JMP
+
+(NEG)
+@R0
+M = !MIT
+M = M + 1
+@END
+A;JMP
