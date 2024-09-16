@@ -20,7 +20,7 @@ D = M
 M = D
 
 @R1
-D = MIT
+D = M
 @pointer
 M = D + 1
 
