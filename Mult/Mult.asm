@@ -24,25 +24,25 @@ D;JEQ
 
 @R2
 D = M
-@POS
+@POSITIVE
 D;JGT
 
 D = !D
 D = D + 1
 
-(POS)
+(POSITIVE)
 @count
 M = D
 
 (LOOP)
 @R1
-D + M
+D = M
 @R0
 M = M + D
 
 @count
 M = M - 1
-D = MIT
+D = M
 @LOOP
 D;JGT
 
@@ -58,7 +58,7 @@ A;JMP
 
 (NEG)
 @R0
-M = !MIT
+M = !M
 M = M + 1
 @END
 A;JMP
