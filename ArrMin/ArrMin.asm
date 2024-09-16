@@ -6,66 +6,86 @@
 @R1
 D = M          
 
-@R0
-M = D           
+@pointer
+M = 0           
 
 @R2
 D = M           
-
 @END            
-D;JEQ
+D;JLE
 
 @R1
-A = M           
-D = M           
-@R3
-M = D           
+A = M 
+D = M 
+@R0 
+M = D
 
+@R1
+D = MIT
+@pointer
+M = D + 1
+
+@idx
+M = 1
+
+(MIN)
+@idx
+D = M
 @R2
-D = M           
-@COUNTER
-M = D           
-
-@LOOP           
-@COUNTER
-D = M           
-@END            
-D;JEQ
-
-@R1
-D = M           
-@R4
-M = D           
-
-@R4
-A = M           
-D = M           
-@R3
-D = D - M       
-
-@SKIP           
-D;JGE
-
-@R1
-A = M           
-D = M          
-@R3
-M = D           
-
-(SKIP)
-@R1
-M = M + 1       
-
-@COUNTER
-M = M - 1       
-@LOOP
-0;JMP           
-
-(END)           
-@R3
-D = M           
-@R0
-M = D           
-
+D = D - M 
 @END
-0;JMP           
+D;JEQ
+
+@pointer
+A = M
+D = M 
+@positionPos
+D;JGE
+@positionNeg
+0;JMP
+
+(MinNew)
+@pointer
+A = M 
+D = M 
+@R0 
+M = D
+
+(LOOP)
+@idx
+M = M + 1
+@pointer
+M = M + 1
+@MIN
+0;JMP
+
+(Double)
+@pointer
+A = M 
+D = M 
+@R0 
+D = D - M 
+@LOOP
+D;JGE 
+@MinNew
+0;JMP
+
+(positionNeg)
+@R0
+D = M 
+@Double
+D;JLT
+@MinNew
+0;JMP
+
+(positionPos)
+@R0
+D = M
+@Double
+D;JGE
+@LOOP
+0;JMP
+
+(END)
+@END
+0;JMP
