@@ -1,4 +1,4 @@
-// Test for input array [5, 7, 3]
+
 
 load ArrMin.asm,
 output-file ArrMin01.out,
