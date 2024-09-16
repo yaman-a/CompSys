@@ -1,5 +1,3 @@
-// Test for input R1 = 5, R2 = 0
-
 load Mult.asm,
 output-file Mult02.out,
 compare-to Mult02.cmp,
