@@ -7,38 +7,41 @@
 D = M - 1
 @R2
 D = M + D
-@LAST
+@last
 M = D
+
 @R2
 D = M
 @END
 D;JLE
 
-(OUT)
+(OUTER)
 @R1
 D = M
-@LAST
-D = D - M 
+@last
+D = D - M
 @END
 D;JGT
+
 @R1
 D = M
 @R3
 M = D + 1
 
-(IN)
+(INNER)
 @R3
 D = M
-@LAST
+@last
 D = D - M
-@INEND
+@INNERFIN
 D;JGT
+
 @R3
 A = M
-D = M
-@PositionPos
+D = M 
+@ELEM_POS
 D;JGE
-@PositionNeg
+@ELEM_NEG
 0;JMP
 
 (SWAP)
@@ -53,43 +56,54 @@ D = M
 @R1
 A = M
 M = D
+
 @temp
 D = M
 @R3
 A = M
 M = D
 
-(ITLOOP)
+
+(INLOOP)
 @R3
 M = M + 1
-@IN
+@INNER
 0;JMP
 
-(INEND)
+(INNERFIN)
 @R1
 M = M + 1
-@OUT
+@OUTER
 0;JMP
 
-(DBL)
+(DOUBLE)
 @R3
 A = M
 D = M
 @R1
 A = M
-D = M
-@ITLOOP
+D = D - M
+@INLOOP
 D;JGE
 @SWAP
 0;JMP
 
-(PositionPos)
+(ELEM_NEG)
 @R1
 A = M
 D = M
-@DBL
+@DOUBLE
+D;JLT
+@SWAP
+0;JMP
+
+(ELEM_POS)
+@R1
+A = M
+D = M
+@DOUBLE
 D;JGE
-@ITLOOP
+@INLOOP
 0;JMP
 
 (END)
