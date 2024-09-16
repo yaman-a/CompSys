@@ -4,110 +4,127 @@
 // Put your code here.
 
 @R1
-D = M - 1
-@R2
-D = M + D
-@last
-M = D
+D=M - 1
 
-@R2
-D = M
-@END
+@SORTED
 D;JLE
 
-(OUTER)
-@R1
+@R2
+D=M
+
+@SORTED
+D;JLE
+
+(MainLoop)
+@R2
 D = M
-@last
-D = D - M
-@END
+@R5
+M = D
+
+@R1
+A=M
+D=M
+
+@R0
+M=D
+
+@R4
+M = 0
+
+(Loop)
+
+@R5
+D = M - 1
+
+@R1
+A = M + D
+D = M
+
+@R7
+M = D
+
+@BPOS
+D;JGE
+
+@R0
+D = M
+@SwitchElements
+D;JGE
+
+@NNPP
+A;JMP
+
+(BPOS)
+@R0
+D = M
+@keepTemp
+D;JLE
+(NNPP)
+@R7
+D = M
+@R0
+D = M-D
+
+@keepTemp
+D;JLE
+
+(SwitchElements)
+@R7
+D = M
+
+@R0
+M=D
+
+@R5
+D = M
+
+@R4 
+M = D-1
+
+(keepTemp)
+@R5
+MD = M-1
+
+
+@Loop
+D-1;JGT
+
+@R4
+D = M
+
+@R1
+D = M + D
+
+@R6
+M = D
+
+@R1
+A = M
+D = M
+@R6
+A = M
+M = D
+@R0
+D = M
+@R1
+A = M
+M = D
+
+@R1
+M = M + 1
+
+@R2
+M = M - 1
+D = M - 1
+
+@MainLoop
 D;JGT
 
-@R1
-D = M
-@R3
-M = D + 1
 
-(INNER)
-@R3
-D = M
-@last
-D = D - M
-@INNERFIN
-D;JGT
-
-@R3
-A = M
-D = M 
-@ELEM_POS
-D;JGE
-@ELEM_NEG
-0;JMP
-
-(SWAP)
-@R1
-A = M
-D = M
-@temp
-M = D
-@R3
-A = M
-D = M
-@R1
-A = M
-M = D
-
-@temp
-D = M
-@R3
-A = M
-M = D
-
-
-(INLOOP)
-@R3
-M = M + 1
-@INNER
-0;JMP
-
-(INNERFIN)
-@R1
-M = M + 1
-@OUTER
-0;JMP
-
-(DOUBLE)
-@R3
-A = M
-D = M
-@R1
-A = M
-D = D - M
-@INLOOP
-D;JGE
-@SWAP
-0;JMP
-
-(ELEM_NEG)
-@R1
-A = M
-D = M
-@DOUBLE
-D;JLT
-@SWAP
-0;JMP
-
-(ELEM_POS)
-@R1
-A = M
-D = M
-@DOUBLE
-D;JGE
-@INLOOP
-0;JMP
-
-(END)
+(SORTED)
 @R0
 M = -1
+
+(END)
 @END
-0;JMP
+A;JMP
