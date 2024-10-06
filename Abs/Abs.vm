@@ -3,6 +3,22 @@
 
 // Put your code here.
 
+push static 0
+push constant 0
+lt
+if-goto NEGATIVE
+
+push static 0
+goto PUSHT
+
+label NEGATIVE
+push static 0
+neg
+goto PUSHT
+
+label PUSHT
+pop static 1
+goto END
 
 label END
 goto END
