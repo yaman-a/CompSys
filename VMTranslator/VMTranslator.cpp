@@ -18,34 +18,35 @@ VMTranslator::~VMTranslator() {
     // Your code here
 }
 
+
 /** Generate Hack Assembly code for a VM push operation */
 string VMTranslator::vm_push(string segment, int offset){
     string translate;
-    string register;
+    string regis;
     string off = to_string(offset);
 
     if (segment == "this") {
-        register = "THIS"
+        regis = "THIS";
     } else if (segment == "that") {
-        register = "THAT"
+        regis = "THAT";
     } else if (segment == "argument") {
-        register = "ARG"
+        regis = "ARG";
     } else if(segment == "local") {
-        register = "LCL";
+        regis = "LCL";
     } else if(segment == "static") {
-        register = to_string(16 + offset);
+        regis = to_string(16 + offset);
     } else if(segment == "pointer") {
-        register = "R" + to_string(3 + offset);
+        regis = "R" + to_string(3 + offset);
     } else if(segment == "temp") {
-        register = "R" + to_string(5 + offset);
+        regis = "R" + to_string(5 + offset);
     } else if(segment == "constant") {
-        register = to_string(offset);
+        regis = to_string(offset);
     } else {
         return "";
     }
 
     if (segment == "constant" || segment == "pointer" || segment == "temp" || segment == "static") {
-        translate.append("@" + register + "\n");
+        translate.append("@" + regis + "\n");
         translate.append("push " + segment + " " + off + "\n");
         if (segment == "constant") {
             translate.append("push " + segment + " " + off + "\n");
@@ -53,7 +54,7 @@ string VMTranslator::vm_push(string segment, int offset){
             translate.append("D=M\n");
         }
     } else if (segment == "this" || segment == "that" || segment == "argument" || segment == "local") {
-        translate.append("@" + register + "\n");
+        translate.append("@" + regis + "\n");
         translate.append("D=M\n");
         translate.append("@" + off + "\n");
         translate.append("A=D+A\n");
@@ -72,25 +73,25 @@ string VMTranslator::vm_push(string segment, int offset){
 /** Generate Hack Assembly code for a VM pop operation */
 string VMTranslator::vm_pop(string segment, int offset){  
     string translate;
-    string register;
+    string regis;
     string off = to_string(offset);
 
     if (segment == "this") {
-        register = "THIS"
+        regis = "THIS";
     } else if (segment == "that") {
-        register = "THAT"
+        regis = "THAT";
     } else if (segment == "argument") {
-        register = "ARG"
+        regis = "ARG";
     } else if(segment == "local") {
-        register = "LCL";
+        regis = "LCL";
     } else if(segment == "static") {
-        register = to_string(16 + offset);
+        regis = to_string(16 + offset);
     } else if(segment == "pointer") {
-        register = "R" + to_string(3 + offset);
+        regis = "R" + to_string(3 + offset);
     } else if(segment == "temp") {
-        register = "R" + to_string(5 + offset);
+        regis = "R" + to_string(5 + offset);
     } else if(segment == "constant") {
-        register = to_string(offset);
+        regis = to_string(offset);
     } else {
         return "";
     }
@@ -99,7 +100,7 @@ string VMTranslator::vm_pop(string segment, int offset){
         return "";
     }
 
-    translate.append("@" + reg + "\n");
+    translate.append("@" + regis + "\n");
 
     if ( segment == "static" ||  segment == "temp" || segment == "pointer") {
         translate.append("D=A\n");
