@@ -49,7 +49,7 @@ string VMTranslator::vm_push(string segment, int offset){
         translate.append("@" + regis + "\n");
         translate.append("push " + segment + " " + off + "\n");
         if (segment == "constant") {
-            translate.append("push " + segment + " " + off + "\n");
+            translate.append("D=A\n");
         } else {
             translate.append("D=M\n");
         }
