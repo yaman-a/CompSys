@@ -124,32 +124,129 @@ string VMTranslator::vm_pop(string segment, int offset){
 
 /** Generate Hack Assembly code for a VM add operation */
 string VMTranslator::vm_add(){
-    return "";
+    string translate;
+
+    translate.append("@SP\n");
+    translate.append("AM=M-1\n");
+    translate.append("D=M\n");
+    translate.append("A=A-1\n");
+
+    translate.append("M=M+D");
+
+    return translate;
 }
 
 /** Generate Hack Assembly code for a VM sub operation */
 string VMTranslator::vm_sub(){
-    return "";
+    string translate;
+    
+    translate.append("@SP\n");
+    translate.append("AM=M-1\n");
+    translate.append("D=M\n");
+    translate.append("A=A-1\n");
+
+    translate.append("M=M-D");
+
+    return translate;
 }
 
 /** Generate Hack Assembly code for a VM neg operation */
 string VMTranslator::vm_neg(){
-    return "";
+    string translate;
+    
+    translate.append("@SP\n");
+    translate.append("A=M-1\n");
+
+    translate.append("M=-M\n");
+
+    return translate;
 }
 
 /** Generate Hack Assembly code for a VM eq operation */
 string VMTranslator::vm_eq(){
-    return "";
+    string translate;
+    
+    translate.append("@SP\n");
+    translate.append("AM=M-1\n");
+    translate.append("D=M\n");
+    translate.append("A=A-1\n");
+
+    translate.append("D=M-D\n");
+    translate.append("@EQUAL\n");
+    translate.append("D;JEQ\n");
+
+    translate.append("@SP\n");
+    translate.append("A=M-1\n");
+    translate.append("M=0\n");
+    translate.append("@END\n");
+    translate.append("0;JMP\n");
+
+    translate.append("(EQUAL)\n");
+    translate.append("@SP\n");
+    translate.append("A=M-1\n");
+    translate.append("M=-1\n");
+
+    translate.append("(END)\n");
+
+    return translate;
 }
 
 /** Generate Hack Assembly code for a VM gt operation */
 string VMTranslator::vm_gt(){
-    return "";
+    string translate;
+    
+    translate.append("@SP\n");
+    translate.append("AM=M-1\n");
+    translate.append("D=M\n");
+    translate.append("A=A-1\n");
+
+    translate.append("D=M-D\n");
+    translate.append("@GREATER\n");
+    translate.append("D;JGT\n");
+
+    translate.append("@SP\n");
+    translate.append("A=M-1\n");
+    translate.append("M=0\n");
+    translate.append("@END\n");
+    translate.append("0;JMP\n");
+
+    translate.append("(GREATER)\n");
+    translate.append("@SP\n");
+    translate.append("A=M-1\n");
+    translate.append("M=-1\n");
+
+    translate.append("(END)\n");
+
+    return translate;
 }
 
 /** Generate Hack Assembly code for a VM lt operation */
 string VMTranslator::vm_lt(){
-    return "";
+    string translate;
+    
+    translate.append("@SP\n");
+    translate.append("AM=M-1\n");
+    translate.append("D=M\n");
+    translate.append("A=A-1\n");
+
+    translate.append("D=M-D\n");
+    translate.append("@LESS\n");
+    translate.append("D;JLE\n");
+
+    translate.append("@SP\n");
+    translate.append("A=M-1\n");
+    translate.append("M=0\n");
+    translate.append("@END\n");
+    translate.append("0;JMP\n");
+
+    translate.append("(LESS)\n");
+    translate.append("@SP\n");
+    translate.append("A=M-1\n");
+    translate.append("M=-1\n");
+
+    translate.append("(END)\n");
+
+    return translate;
 }
 
 /** Generate Hack Assembly code for a VM and operation */
