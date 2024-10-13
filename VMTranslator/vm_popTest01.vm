@@ -1,0 +1,8 @@
+push constant 1
+pop this 0
+
+push constant 1
+pop that 0
+
+push constant 1
+pop temp 0
