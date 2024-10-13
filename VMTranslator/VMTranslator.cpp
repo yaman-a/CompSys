@@ -21,54 +21,59 @@ VMTranslator::~VMTranslator() {
 
 /** Generate Hack Assembly code for a VM push operation */
 string VMTranslator::vm_push(string segment, int offset){
-    string translate;
-    string regis;
-    string off = to_string(offset);
+    string translation;
+    string reg;
+    string ofs = to_string(offset);
 
     if (segment == "this") {
-        regis = "THIS";
+        reg = "THIS";
     } else if(segment == "that") {
-        regis = "THAT";
+        reg = "THAT";
+
     } else if(segment == "argument") {
-        regis = "ARG";
+        reg = "ARG";
+
     } else if(segment == "local") {
-        regis = "LCL";
+        reg = "LCL";
+
     } else if(segment == "static") {
-        regis = to_string(16 + offset);
+        reg = to_string(16 + offset);
+
     } else if(segment == "pointer") {
-        regis = "R" + to_string(3 + offset);
+        reg = "R" + to_string(3 + offset);
+
     } else if(segment == "temp") {
-        regis = "R" + to_string(5 + offset);
+        reg = "R" + to_string(5 + offset);
+
     } else if(segment == "constant") {
-        regis = to_string(offset);
+        reg = to_string(offset);
     } else {
         return "";
     }
 
     if (segment == "constant" || segment == "static" || segment == "pointer" || segment == "temp") {
-        translate.append("@" + regis + "\n");
-        translate.append("push " + segment + " " + off + "\n");
+        translation.append("@" + reg + "\n");
+        translation.append("push " + segment + " " + ofs + "\n");
         if (segment == "constant") {
-            translate.append("D=A\n");
+            translation.append("D=A\n");
         } else {
-            translate.append("D=M\n");
+            translation.append("D=M\n");
         }
     } else if (segment == "local" || segment == "this" || segment == "that" || segment == "argument") {
-        translate.append("@" + regis + "\n");
-        translate.append("D=M\n");
-        translate.append("@" + off + "\n");
-        translate.append("A=D+A\n");
-        translate.append("D=M\n");
+        translation.append("@" + reg + "\n");
+        translation.append("D=M\n");
+        translation.append("@" + ofs + "\n");
+        translation.append("A=D+A\n");
+        translation.append("D=M\n");
     }
 
-    translate.append("@SP\n");
-    translate.append("A=M\n");
-    translate.append("M=D\n");
-    translate.append("@SP\n");
-    translate.append("M=M+1\n");
+    translation.append("@SP\n");
+    translation.append("A=M\n");
+    translation.append("M=D\n");
+    translation.append("@SP\n");
+    translation.append("M=M+1\n");
 
-
-    return translate;
+    return translation;
 }
 
 /** Generate Hack Assembly code for a VM pop operation */
