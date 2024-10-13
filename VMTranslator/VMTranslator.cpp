@@ -163,91 +163,116 @@ string VMTranslator::vm_neg(){
 }
 
 /** Generate Hack Assembly code for a VM eq operation */
-string VMTranslator::vm_eq(){
+string VMTranslator::vm_eq() {
+    static int eq_count = 0;
+    string unique_eq_label = "EQUAL_" + to_string(eq_count);
+    string end_label = "END_" + to_string(eq_count);
+    eq_count++;
+
     string translate;
     
     translate.append("@SP\n");
-    translate.append("AM=M-1\n");
-    translate.append("D=M\n");
-    translate.append("A=A-1\n");
-
-    translate.append("D=M-D\n");
-    translate.append("@EQUAL\n");
+    translate.append("AM=M-1\n");  
+    translate.append("D=M\n");     
+    translate.append("A=A-1\n");  
+    
+    translate.append("D=M-D\n");  
+    translate.append("@" + unique_eq_label + "\n"); 
     translate.append("D;JEQ\n");
+    
 
     translate.append("@SP\n");
     translate.append("A=M-1\n");
-    translate.append("M=0\n");
-    translate.append("@END\n");
-    translate.append("0;JMP\n");
-
-    translate.append("(EQUAL)\n");
+    translate.append("M=0\n");     
+    translate.append("@" + end_label + "\n");
+    translate.append("0;JMP\n"); 
+    
+    translate.append("(" + unique_eq_label + ")\n");
     translate.append("@SP\n");
     translate.append("A=M-1\n");
     translate.append("M=-1\n");
-
-    translate.append("(END)\n");
+    
+ 
+    translate.append("(" + end_label + ")\n");
 
     return translate;
 }
+
 
 /** Generate Hack Assembly code for a VM gt operation */
-string VMTranslator::vm_gt(){
+string VMTranslator::vm_gt() {
+    static int gt_count = 0; 
+    string unique_gt_label = "GREATER_" + to_string(gt_count);
+    string end_label = "END_" + to_string(gt_count);
+    gt_count++; 
+
     string translate;
     
     translate.append("@SP\n");
-    translate.append("AM=M-1\n");
-    translate.append("D=M\n");
-    translate.append("A=A-1\n");
-
-    translate.append("D=M-D\n");
-    translate.append("@GREATER\n");
+    translate.append("AM=M-1\n");  
+    translate.append("D=M\n");     
+    translate.append("A=A-1\n");   
+    
+    translate.append("D=M-D\n");   
+    translate.append("@" + unique_gt_label + "\n"); 
     translate.append("D;JGT\n");
-
+    
+  
     translate.append("@SP\n");
     translate.append("A=M-1\n");
-    translate.append("M=0\n");
-    translate.append("@END\n");
-    translate.append("0;JMP\n");
-
-    translate.append("(GREATER)\n");
+    translate.append("M=0\n");    
+    translate.append("@" + end_label + "\n");
+    translate.append("0;JMP\n");   
+    
+    
+    translate.append("(" + unique_gt_label + ")\n");
     translate.append("@SP\n");
     translate.append("A=M-1\n");
-    translate.append("M=-1\n");
-
-    translate.append("(END)\n");
+    translate.append("M=-1\n");    
+    
+    
+    translate.append("(" + end_label + ")\n");
 
     return translate;
 }
+
 
 /** Generate Hack Assembly code for a VM lt operation */
-string VMTranslator::vm_lt(){
+string VMTranslator::vm_lt() {
+    static int lt_count = 0; 
+    string unique_lt_label = "LESS_" + to_string(lt_count);
+    string end_label = "END_" + to_string(lt_count);
+    lt_count++; 
+
     string translate;
     
     translate.append("@SP\n");
-    translate.append("AM=M-1\n");
-    translate.append("D=M\n");
-    translate.append("A=A-1\n");
-
-    translate.append("D=M-D\n");
-    translate.append("@LESS\n");
-    translate.append("D;JLE\n");
-
+    translate.append("AM=M-1\n");  
+    translate.append("D=M\n");    
+    translate.append("A=A-1\n");  
+    
+    translate.append("D=M-D\n");  
+    translate.append("@" + unique_lt_label + "\n"); 
+    translate.append("D;JLT\n");
+    
+    
     translate.append("@SP\n");
     translate.append("A=M-1\n");
-    translate.append("M=0\n");
-    translate.append("@END\n");
-    translate.append("0;JMP\n");
-
-    translate.append("(LESS)\n");
+    translate.append("M=0\n");     
+    translate.append("@" + end_label + "\n");
+    translate.append("0;JMP\n");   
+    
+    
+    translate.append("(" + unique_lt_label + ")\n");
     translate.append("@SP\n");
     translate.append("A=M-1\n");
-    translate.append("M=-1\n");
-
-    translate.append("(END)\n");
+    translate.append("M=-1\n");   
+    
+    translate.append("(" + end_label + ")\n");
 
     return translate;
 }
+
 
 /** Generate Hack Assembly code for a VM and operation */
 string VMTranslator::vm_and(){
