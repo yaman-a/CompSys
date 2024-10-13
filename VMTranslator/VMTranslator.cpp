@@ -314,7 +314,21 @@ string VMTranslator::vm_if(string label){
 
 /** Generate Hack Assembly code for a VM function operation */
 string VMTranslator::vm_function(string function_name, int n_vars){
-    return "";
+    string translate;
+    
+    translate.append("(" + function_name + ")\n");
+    
+    for (int i = 0; i < n_vars; ++i) {
+        translate.append("@0\n");
+        translate.append("D=A\n");
+        translate.append("@SP\n");
+        translate.append("A=M\n");
+        translate.append("M=D\n");  
+        translate.append("@SP\n");
+        translate.append("M=M+1\n");
+    }
+
+    return translate;
 }
 
 /** Generate Hack Assembly code for a VM call operation */
