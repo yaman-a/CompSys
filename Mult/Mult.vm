@@ -4,7 +4,120 @@
 
 // Put your code here.
 
+push constant 0
+pop static 5
 
+push static 0
+pop static 11
+push static 1
+pop static 12
+
+push static 0
+push constant 0
+lt
+if-goto  XNEG
+goto YCHECK
+
+label YCHECK
+    push static 1
+    push constant 0 
+    lt
+    if-goto YNEG
+goto BIGGER
+
+label XNEG
+    push static 0
+    neg
+    pop static 11
+    push static 5
+    push constant 1
+    add
+    pop static 5
+goto YCHECK
+
+label YNEG
+    push static 1
+    neg
+    pop static 12
+    push static 5
+    push constant 1
+    add
+    pop static 5
+goto BIGGER
+
+label BIGGER
+    push static 11
+    push static 1
+    gt
+    if-goto BIG
+goto SMALL
+
+label BIG
+    push static 12
+    pop static 10
+goto ADDPOSB
+
+label SMALL
+    push static 11
+    pop static 10
+goto ADDPOSS
+
+label ADDPOSB
+    push static 10
+    push constant 0
+    eq
+    if-goto CHECKNEG
+
+    push static 8
+    push static 11
+    add
+    pop static 8
+
+    push static 10
+    push constant 1
+    sub
+    pop static 10
+
+goto ADDPOSB
+
+label ADDPOSS
+    push static 10
+    push constant 0
+    eq
+    if-goto CHECKNEG
+
+    push static 8
+    push static 12
+    add
+    pop static 8
+
+    push static 10
+    push constant 1
+    sub
+    pop static 10
+
+goto ADDPOSS
+
+label CHECKNEG
+    push static 5
+    push constant 0
+    eq
+    if-goto POST
+
+    push static 8
+    neg
+    pop static 8
+
+    push static 5
+    push constant 1
+    sub
+    pop static 5
+
+goto CHECKNEG
+
+label POST
+    push static 8
+    pop local 0
 
 label END
 goto END
