@@ -3,6 +3,7 @@
 
 #include <list>
 #include <exception>
+#include <iostream>
 
 #include "ParseTree.h"
 #include "Token.h"
