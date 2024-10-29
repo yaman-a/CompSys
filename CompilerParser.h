@@ -11,6 +11,8 @@ class CompilerParser {
     public:
         CompilerParser(std::list<Token*> tokens);
 
+        std::list<Token*> tokens;
+
         ParseTree* compileProgram();
         ParseTree* compileClass();
         ParseTree* compileClassVarDec();
@@ -40,5 +42,6 @@ class ParseException : public std::exception {
     public:
         const char* what();
 };
+
 
 #endif /*COMPILERPARSER_H*/

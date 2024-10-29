@@ -6,6 +6,7 @@
  * @param tokens A linked list of tokens to be parsed
  */
 CompilerParser::CompilerParser(std::list<Token*> tokens) {
+    this->tokens = tokens;
 }
 
 /**
@@ -13,7 +14,7 @@ CompilerParser::CompilerParser(std::list<Token*> tokens) {
  * @return a ParseTree
  */
 ParseTree* CompilerParser::compileProgram() {
-    return NULL;
+    
 }
 
 /**
@@ -85,7 +86,64 @@ ParseTree* CompilerParser::compileLet() {
  * @return a ParseTree
  */
 ParseTree* CompilerParser::compileIf() {
-    return NULL;
+    ParseTree* ans = new ParseTree("ifStatement","");
+
+    if (!have("keyword", "if")){
+        throw ParseException();
+    }
+    ans->addChild(new ParseTree(current()->getType(), current()->getValue() ));
+    next();
+
+    if (!have("symbol", "(")){
+        throw ParseException();
+    }
+    ans->addChild(new ParseTree(current()->getType(), current()->getValue() ));
+    next();
+
+    ans->addChild(compileExpression());
+
+    if (!have("symbol", ")")){
+        throw ParseException();
+    }
+    ans->addChild(new ParseTree(current()->getType(), current()->getValue() ));
+    next();
+
+    if (!have("symbol", "{")){
+        throw ParseException();
+    }
+    ans->addChild(new ParseTree(current()->getType(), current()->getValue() ));
+    next();
+
+    ans->addChild(compileStatements());
+    
+    if (!have("symbol", "}")){
+        throw ParseException();
+    }
+    ans->addChild(new ParseTree(current()->getType(), current()->getValue() ));
+    next();
+
+    if (!have("keyword", "else")){
+        return ans;
+    }
+    ans->addChild(new ParseTree(current()->getType(), current()->getValue() ));
+    next();
+
+    if (!have("symbol", "{")){
+        throw ParseException();
+    }
+    ans->addChild(new ParseTree(current()->getType(), current()->getValue() ));
+    next();
+        
+    
+
+    ans->addChild(compileStatements());
+
+    if (!have("symbol", "}")){
+        throw ParseException();
+    }
+    ans->addChild(new ParseTree(current()->getType(), current()->getValue() ));
+
+    return ans;
 }
 
 /**
@@ -101,7 +159,21 @@ ParseTree* CompilerParser::compileWhile() {
  * @return a ParseTree
  */
 ParseTree* CompilerParser::compileDo() {
-    return NULL;
+    ParseTree* ans = new ParseTree("doStatement", "");
+    if (!have("keyword", "do")){
+        throw ParseException();
+    }
+    ans->addChild(new ParseTree(current()->getType(), current()->getValue() ));
+    next();
+
+    ans->addChild(compileExpression());
+
+    if (!have("symbol", ";")){
+        throw ParseException();
+    }
+    ans->addChild(new ParseTree(current()->getType(), current()->getValue() ));
+
+    return ans;
 }
 
 /**
